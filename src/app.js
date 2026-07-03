@@ -3,6 +3,7 @@ import { config as defaultConfig } from './config/index.js';
 import { createDatabase } from './database/index.js';
 import { createAuthMiddleware } from './middlewares/authMiddleware.js';
 import { errorMiddleware, notFoundMiddleware } from './middlewares/errorMiddleware.js';
+import { createDocsRouter } from './routes/docsRoutes.js';
 import { createExerciseRouter } from './routes/exerciseRoutes.js';
 import { createHealthRouter } from './routes/healthRoutes.js';
 import { createUserRouter } from './routes/userRoutes.js';
@@ -25,6 +26,7 @@ export function createApp({
   const authenticate = createAuthMiddleware({ db, config });
 
   app.use(express.json({ limit: '1mb' }));
+  app.use(createDocsRouter());
   app.use(createHealthRouter());
   app.use(createUserRouter({ userService, config }));
   app.use(createExerciseRouter({ authenticate, exerciseService }));

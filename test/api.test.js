@@ -84,4 +84,24 @@ describe('API', () => {
     // Assert
     assert.equal(response.status, 401);
   });
+
+  it('serves the OpenAPI specification and Swagger UI', async () => {
+    // Arrange
+    const docsJsonPath = '/docs.json';
+    const swaggerUiPath = '/docs/';
+
+    // Act
+    const docsJsonResponse = await api.get(docsJsonPath);
+    const swaggerUiResponse = await api.get(swaggerUiPath);
+
+    // Assert
+    assert.equal(docsJsonResponse.status, 200);
+    assert.equal(docsJsonResponse.body.openapi, '3.0.3');
+    assert.ok(docsJsonResponse.body.paths['/users']);
+    assert.ok(docsJsonResponse.body.paths['/login']);
+    assert.ok(docsJsonResponse.body.paths['/exercises']);
+
+    assert.equal(swaggerUiResponse.status, 200);
+    assert.match(swaggerUiResponse.text, /Swagger UI/);
+  });
 });

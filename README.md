@@ -24,6 +24,13 @@ npm start
 
 A API inicia em `http://localhost:3000`.
 
+## Documentação Swagger
+
+Com a API em execução, acesse:
+
+- Swagger UI: `http://localhost:3000/docs`
+- OpenAPI JSON: `http://localhost:3000/docs.json`
+
 ## Testes
 
 ```bash
