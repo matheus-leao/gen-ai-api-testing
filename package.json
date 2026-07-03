@@ -1,0 +1,21 @@
+{
+  "name": "gen-ai-api-testing",
+  "version": "1.0.0",
+  "description": "API para gerar exercícios customizados de lógica de programação com LLM.",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "mocha"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "mocha": "^10.7.3",
+    "supertest": "^7.0.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
