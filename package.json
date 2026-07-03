@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "node src/server.js",
-    "test": "mocha"
+    "test": "mocha \"test/**/*.js\" \"tests/**/*.js\" --reporter mochawesome"
   },
   "dependencies": {
     "express": "^4.19.2",
@@ -14,6 +14,8 @@
   },
   "devDependencies": {
     "mocha": "^10.7.3",
+    "mochawesome": "^7.1.4",
+    "mochawesome-report-generator": "^6.3.2",
     "supertest": "^7.0.0"
   },
   "engines": {
