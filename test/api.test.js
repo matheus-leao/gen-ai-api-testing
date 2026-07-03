@@ -85,6 +85,76 @@ describe('API', () => {
     assert.equal(response.status, 401);
   });
 
+  it('lists only exercises created by the authenticated user', async () => {
+    // Arrange
+    const firstUserPayload = {
+      name: 'Ana',
+      email: 'ana@example.com',
+      password: 'secret123'
+    };
+    const secondUserPayload = {
+      name: 'Bruno',
+      email: 'bruno@example.com',
+      password: 'secret456'
+    };
+    const exercisePayload = {
+      level: 'beginner',
+      topics: ['conditions', 'vectors', 'lists', 'loops'],
+      context: 'padaria'
+    };
+
+    // Act
+    const firstUserResponse = await api
+      .post('/users')
+      .send(firstUserPayload);
+    const firstLoginResponse = await api
+      .post('/login')
+      .send({
+        email: firstUserPayload.email,
+        password: firstUserPayload.password
+      });
+
+    await api
+      .post('/users')
+      .send(secondUserPayload);
+    const secondLoginResponse = await api
+      .post('/login')
+      .send({
+        email: secondUserPayload.email,
+        password: secondUserPayload.password
+      });
+
+    const firstExerciseResponse = await api
+      .post('/exercises')
+      .set('Authorization', `Bearer ${firstLoginResponse.body.token}`)
+      .send(exercisePayload);
+    await api
+      .post('/exercises')
+      .set('Authorization', `Bearer ${secondLoginResponse.body.token}`)
+      .send(exercisePayload);
+
+    const listResponse = await api
+      .get('/exercises')
+      .set('Authorization', `Bearer ${firstLoginResponse.body.token}`);
+
+    // Assert
+    assert.equal(listResponse.status, 200);
+    assert.equal(listResponse.body.length, 1);
+    assert.equal(listResponse.body[0].id, firstExerciseResponse.body.id);
+    assert.equal(listResponse.body[0].userId, firstUserResponse.body.id);
+  });
+
+  it('blocks exercise listing without a token', async () => {
+    // Arrange
+    const listPath = '/exercises';
+
+    // Act
+    const response = await api.get(listPath);
+
+    // Assert
+    assert.equal(response.status, 401);
+  });
+
   it('serves the OpenAPI specification and Swagger UI', async () => {
     // Arrange
     const docsJsonPath = '/docs.json';

@@ -3,6 +3,12 @@ import { Router } from 'express';
 export function createExerciseRouter({ authenticate, exerciseService }) {
   const router = Router();
 
+  router.get('/exercises', authenticate, (request, response) => {
+    const exercises = exerciseService.listByUser(request.user);
+
+    response.status(200).json(exercises);
+  });
+
   router.post('/exercises', authenticate, async (request, response) => {
     try {
       const exercise = await exerciseService.createForUser({

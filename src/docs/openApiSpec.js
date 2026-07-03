@@ -302,6 +302,40 @@ export const openApiSpec = {
       }
     },
     '/exercises': {
+      get: {
+        tags: ['Exercises'],
+        summary: 'Lista os exercícios do usuário autenticado',
+        security: [
+          {
+            bearerAuth: []
+          }
+        ],
+        responses: {
+          200: {
+            description: 'Lista de exercícios do usuário autenticado',
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'array',
+                  items: {
+                    $ref: '#/components/schemas/ExerciseResponse'
+                  }
+                }
+              }
+            }
+          },
+          401: {
+            description: 'Token JWT ausente ou inválido',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ErrorResponse'
+                }
+              }
+            }
+          }
+        }
+      },
       post: {
         tags: ['Exercises'],
         summary: 'Cria um exercício para o usuário autenticado',

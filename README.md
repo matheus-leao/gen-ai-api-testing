@@ -108,3 +108,27 @@ Resposta:
   "createdAt": "2026-07-03T00:00:00.000Z"
 }
 ```
+
+### Listar exercícios do usuário logado
+
+Requer token JWT no header `Authorization`.
+
+```http
+GET /exercises
+Authorization: Bearer jwt-token
+```
+
+Resposta:
+
+```json
+[
+  {
+    "id": "exercise-id",
+    "userId": "user-id",
+    "level": "beginner",
+    "prompt": "prompt enviado ao provedor",
+    "content": "exercicio gerado pelo provedor",
+    "createdAt": "2026-07-03T00:00:00.000Z"
+  }
+]
+```

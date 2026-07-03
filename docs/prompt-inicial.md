@@ -9,6 +9,7 @@ Crie uma api responsável por permitir que alunos possam receber exercícios de 
 - Utilize um Banco de dados em memória para salvar essas informações
 - O projeto deve ter um arquivo .env que contem a api key da api do provedor de LLM responsável por gerar o exercício. A api key deve suportar diferentes tipos de token para provedores diferentes, github copilot, Gemini e Codex.
 - O projeto deve ser organizado com as seguintes pastas config, database, middlewares, models, routes, services, utils.
+- O projeto deve ser documentado utilizando o swagger.
 
 # Regras para testes:
 - Para a pasta de testes utilize o mocha e siga o padrão AAA (Arrange, Act, Assert)
